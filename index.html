@@ -1,18 +1,171 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的静态网页</title>
+    <title>我的个人主页</title>
+
+    <!-- ===== 样式都写在这个文件里，不联网、不依赖别的文件 ===== -->
     <style>
+        /* 想换配色，改这几行就够了 */
+        :root {
+            --brand-1: #6366f1;   /* 主色（蓝紫） */
+            --brand-2: #a855f7;   /* 副色（紫）   */
+            --ink: #0f172a;       /* 正文颜色     */
+            --ink-soft: #5b6577;  /* 次要文字颜色 */
+            --card: rgba(255, 255, 255, 0.74);
+            --line: rgba(15, 23, 42, 0.10);
+        }
+
+        * { box-sizing: border-box; }
+
         body {
-            background-color: red;
-            color: white;
+            margin: 0;
+            min-height: 100vh;
+            padding: 48px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            font-family: system-ui, -apple-system, "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+            color: var(--ink);
+            line-height: 1.75;
+            background: #f7f8fc;
+            /* 三个柔和的光斑，纯装饰 */
+            background-image:
+                radial-gradient(42rem 26rem at 12% -6%, rgba(99, 102, 241, 0.22), transparent 62%),
+                radial-gradient(38rem 24rem at 92% 2%, rgba(168, 85, 247, 0.20), transparent 62%),
+                radial-gradient(36rem 24rem at 50% 106%, rgba(56, 189, 248, 0.16), transparent 62%);
+            background-attachment: fixed;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .wrap { width: 100%; max-width: 620px; margin: 0 auto; }
+
+        .card {
+            padding: 46px 40px 38px;
+            border: 1px solid var(--line);
+            border-radius: 26px;
+            background: var(--card);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 26px 64px -34px rgba(15, 23, 42, .42);
+            animation: rise .7s ease both;
+        }
+
+        /* 圆形头像位。想换成图片：打开下面 background-image 那行 */
+        .avatar {
+            width: 96px; height: 96px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            display: grid; place-items: center;
+            font-size: 26px; font-weight: 700; color: #fff;
+            background: linear-gradient(135deg, var(--brand-1), var(--brand-2));
+            box-shadow: 0 14px 30px -12px rgba(99, 102, 241, .85);
+            /* background-image: url("头像.jpg"); background-size: cover; */
+        }
+
+        h1 {
+            margin: 0 0 8px;
+            text-align: center;
+            font-size: clamp(24px, 4.6vw, 33px);
+            letter-spacing: .5px;
+        }
+
+        .sub {
+            margin: 0 0 32px;
+            text-align: center;
+            font-size: 15px;
+            color: var(--ink-soft);
+        }
+
+        /* ---------- 信息行：姓名 / 班级 / 学号 ---------- */
+        .info { margin: 0; padding: 0; list-style: none; }
+        .info li {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 15px 4px;
+            border-top: 1px dashed var(--line);
+        }
+        .info li:first-child { border-top: none; }
+
+        .k {
+            flex: none;
+            width: 4em;
+            font-size: 15px;
+            color: var(--ink-soft);
+            letter-spacing: 2px;
+        }
+        .v { flex: 1; font-size: 18px; font-weight: 600; }
+
+        /* 待填写的空位：浅紫底 + 虚线下划线，一眼就能看出哪里要改 */
+        .blank {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 9px;
+            color: #4338ca;
+            font-weight: 500;
+            background: rgba(99, 102, 241, .08);
+            border-bottom: 1px dashed rgba(99, 102, 241, .55);
+        }
+
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 13px;
+            color: var(--ink-soft);
+        }
+
+        /* 进场动画 */
+        @keyframes rise {
+            from { opacity: 0; transform: translateY(14px); }
+            to   { opacity: 1; transform: none; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            * { animation: none !important; transition: none !important; }
+        }
+
+        /* 手机上的调整 */
+        @media (max-width: 560px) {
+            body { padding: 28px 14px; }
+            .card { padding: 34px 22px 30px; border-radius: 22px; }
+            .v { font-size: 16px; }
+            .k { width: 3.6em; letter-spacing: 1px; }
         }
     </style>
 </head>
+
 <body>
-    <h1>欢迎来到我的网站</h1>
-    <p>这是我的第一个静态网页！</p>
+<div class="wrap">
+
+    <div class="card">
+
+        <!-- 想换成自己的照片，就把样式里 .avatar 的 background-image 那行打开 -->
+        <div class="avatar">我</div>
+
+        <h1>我的个人主页</h1>
+        <p class="sub">第一次用 HTML + GitHub Pages 做的静态网页</p>
+
+        <!-- ↓↓↓↓ 你只需要把下面 3 个【】里的内容换成自己的信息 ↓↓↓↓ -->
+        <ul class="info">
+            <li>
+                <span class="k">姓名</span>
+                <span class="v"><span class="blank">【填写姓名】</span></span>
+            </li>
+            <li>
+                <span class="k">班级</span>
+                <span class="v"><span class="blank">【填写班级】</span></span>
+            </li>
+            <li>
+                <span class="k">学号</span>
+                <span class="v"><span class="blank">【填写学号】</span></span>
+            </li>
+        </ul>
+        <!-- ↑↑↑↑ 上面这 3 行就是你要填的地方，其余不用动 ↑↑↑↑ -->
+
+    </div>
+
+    <footer>由 GitHub Pages 托管 · wushinothing.github.io</footer>
+
+</div>
 </body>
 </html>
